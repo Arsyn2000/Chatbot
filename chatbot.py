@@ -65,11 +65,12 @@ for intent in data["intents"]:
     if intent["tag"] not in classes:
         classes.append(intent["tag"])
 
-print(words)
-print(len(words))
-print(doc_x)
-print(doc_y)
-print(classes)
+print("words:", words)
+print("len(words):", len(words))
+print("doc_x:", doc_x)
+print("len(doc_x):", len(doc_x))
+# print(doc_y)
+# print(classes)
 
 # lemmatize all the words in the vocab and convert them to lowercase if the words don't appear in punctuation
 # string.punctuation has all the punctuations : !"#$%&'()*+, -./:;<=>?@[\]^_`{|}~
@@ -80,8 +81,9 @@ words = sorted(set(words))
 classes = sorted(set(classes))
 
 print("words:", words)
-print(len(words))
-print("classes:", classes)
+print("len(words):", len(words))
+# print(len(words))
+# print("classes:", classes)
 
 # Now that we have separated our data, we are now ready to train our algorithm
 # However, Neural Network expect numerical values, and not words
@@ -89,12 +91,25 @@ print("classes:", classes)
 
 training = []
 out_empty = [0] * len(classes)
-print("out_empty:", out_empty)
+# print("out_empty:", out_empty)
 
 # Creating the bag of words model
-print(enumerate(doc_x))
+# print(enumerate(doc_x))
 for idx, doc in enumerate(doc_x):
     bow = []
     text = lemmatizer.lemmatize(doc.lower())
-    print(text)
+    # print("text:", text)
+    for word in words:
+        bow.append(1) if word in text else bow.append(0)
+
+print("bow:", bow)
+print("len(bow)", len(bow))
+
+# Mark the index of class that the current pattern is associated to
+output_row = list(out_empty)
+print("output_row:", output_row)
+output_row[classes.index(doc_y[idx])] = 1
+print("output_row:", output_row)
+
+
 
